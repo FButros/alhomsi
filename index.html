@@ -715,10 +715,10 @@
     direction: ltr;
     font-family: var(--font-en);
   }
-  body.en-mode .ar { display: none; }
-  body.en-mode .en { display: block !important; }
+  body.en-mode .ar { display: none !important; }
+  body.en-mode .en-only { display: block !important; }
   body.ar-mode .ar { display: block; }
-  body.ar-mode .en-only { display: none; }
+  body.ar-mode .en-only { display: none !important; }
 
   .bilingual-hidden { display: none; }
 </style>
@@ -766,9 +766,9 @@
     <h1 class="hero-name-ar ar">محمد الحمصي</h1>
     <h1 class="hero-name-ar en-only" style="display:none; font-family: var(--font-en); font-size: clamp(2.5rem,6vw,5rem); font-style:italic; font-weight:300; color: var(--cream)">Mohammed Alhomsi</h1>
     <p class="hero-name-en ar">عازف ومعلم العود</p>
-    <p class="hero-name-en en-only" style="display:none">Oud Virtuoso & Instructor · Turkey</p>
+    <p class="hero-name-en en-only" style="display:none">Oud Teacher & Musician </p>
     <div class="hero-divider"></div>
-    <p class="hero-subtitle ar">رحلة موسيقية عميقة مع آلة العود العربية الأصيلة — دروس خاصة وجماعية لجميع المستويات</p>
+    <p class="hero-subtitle ar">رحلة موسيقية عميقة مع آلة العود العربية الأصيلة — دروس خاصة  لجميع المستويات</p>
     <p class="hero-subtitle en-only" style="display:none; font-family: var(--font-en); font-style: italic; font-size: 1.05rem;">A profound musical journey through the authentic Arabic oud — private and group lessons for all levels</p>
     <div class="hero-cta">
       <a href="#contact" class="btn-primary ar">ابدأ رحلتك الموسيقية</a>
@@ -1015,16 +1015,16 @@ function setLang(lang) {
 
   if (lang === 'ar') {
     body.dir = 'rtl';
-    document.querySelectorAll('.ar').forEach(el => el.style.display = '');
-    document.querySelectorAll('.en-only').forEach(el => el.style.display = 'none');
-    document.querySelectorAll('[data-ar]').forEach(el => el.textContent = el.dataset.ar);
+    body.classList.remove('en-mode');
+    body.classList.add('ar-mode');
     document.querySelector('.nav-logo').textContent = 'محمد الحمصي';
+    document.querySelectorAll('[data-ar]').forEach(el => el.textContent = el.dataset.ar);
   } else {
     body.dir = 'ltr';
-    document.querySelectorAll('.ar').forEach(el => el.style.display = 'none');
-    document.querySelectorAll('.en-only').forEach(el => el.style.display = '');
-    document.querySelectorAll('[data-en]').forEach(el => el.textContent = el.dataset.en);
+    body.classList.remove('ar-mode');
+    body.classList.add('en-mode');
     document.querySelector('.nav-logo').textContent = 'Mohammed Alhomsi';
+    document.querySelectorAll('[data-en]').forEach(el => el.textContent = el.dataset.en);
     // Fix right-to-left layout for EN
     document.querySelectorAll('.hero-content').forEach(el => {
       el.style.marginRight = '0';
